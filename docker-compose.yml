@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      MONGO_URI: "mongodb://db:27017/"
+
+  db:
+    image: mongo:latest
+    volumes:
+      - ./data/db:/data/db
